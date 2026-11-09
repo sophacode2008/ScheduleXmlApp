@@ -1,0 +1,73 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ScheduleXmlApp.Pages.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Обробка розкладу (XML)" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <!-- Кнопки завантаження -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="Завантажити XML" Clicked="btnLoadXml_Click" />
+                <Button Text="Завантажити XSL" Clicked="btnLoadXsl_Click" />
+            </HorizontalStackLayout>
+            <Label x:Name="lblFilePath" Text="Файл не вибрано" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
+
+            <!-- Випадаючі списки -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Picker x:Name="strategyPicker" Title="Оберіть стратегію">
+                    <Picker.Items>
+                        <x:String>LINQ to XML</x:String>
+                        <x:String>DOM</x:String>
+                        <x:String>SAX</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                </Picker>
+
+                <Picker x:Name="attributePicker" Title="Оберіть атрибут">
+                    <Picker.Items>
+                        <x:String>TeacherName</x:String>
+                        <x:String>StudentGroup</x:String>
+                        <x:String>Faculty</x:String>
+                        <x:String>Auditorium</x:String>
+                    </Picker.Items>
+                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                </Picker>
+            </HorizontalStackLayout>
+
+            <!-- Пошук -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Entry x:Name="searchEntry" Placeholder="Ключове слово" MinimumWidthRequest="200" />
+                <Button Text="Пошук" Clicked="btnSearch_Click" />
+            </HorizontalStackLayout>
+
+            <!-- Нижні кнопки дій -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="В HTML" Clicked="btnTransform_Click" BackgroundColor="Green" />
+                <Button Text="Очистити" Clicked="btnClear_Click" BackgroundColor="Orange" />
+                <Button Text="Вихід" Clicked="btnExit_Click" BackgroundColor="Red" />
+            </HorizontalStackLayout>
+
+            <!-- Список результатів -->
+            <CollectionView x:Name="scheduleCollectionView" HeightRequest="400">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="5" Padding="10" Stroke="Gray">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="5" />
+                            </Border.StrokeShape>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding TeacherName, StringFormat='Викладач: {0}'}" FontAttributes="Bold" />
+                                <Label Text="{Binding Curriculum, StringFormat='Дисципліна: {0}'}" />
+                                <Label Text="{Binding StudentGroup, StringFormat='Група: {0}'}" />
+                                <Label Text="{Binding Auditorium, StringFormat='Аудиторія: {0}'}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
